@@ -6,172 +6,143 @@
 <title>Hoy Hay Café · Catálogo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@800&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --leather: #4a3d33;
+    --leather: #4b3d34;
     --leather-dark: #372c24;
-    --paper: #fbf8f1;
-    --paper-edge: #efe7d6;
+    --paper: #fbf9f4;
     --ink: #3a2c22;
-    --ink-soft: #7a6a5b;
+    --ink-soft: #6f6053;
     --gold: #b08d57;
-    --sage: #8a9a6a;
-    --rose: #c98a86;
-    --honey: #e2b86a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: 100%; }
   body {
     min-height: 100vh;
     background:
       radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,.08), transparent 60%),
-      repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,.015) 0 2px, transparent 2px 5px),
       var(--leather);
     color: var(--ink);
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 17px;
-    line-height: 1.3;
+    font-size: 17px; line-height: 1.3;
     padding: 0 16px 40px;
   }
 
   /* ---------- barra de secciones ---------- */
   .tabs {
     position: sticky; top: 0; z-index: 10;
-    margin: 0 -16px 22px;
-    padding: 12px 16px;
-    background: rgba(55,44,36,.94);
-    backdrop-filter: blur(6px);
+    margin: 0 -16px 22px; padding: 12px 16px;
+    background: rgba(55,44,36,.95); backdrop-filter: blur(6px);
     border-bottom: 1px solid rgba(255,255,255,.08);
     display: flex; gap: 8px; justify-content: center; align-items: center;
     overflow-x: auto; scrollbar-width: none;
   }
   .tabs::-webkit-scrollbar { display: none; }
   .tabs button {
-    flex: 0 0 auto;
+    flex: 0 0 auto; cursor: pointer; transition: .2s;
     font: 600 12px/1 "Cinzel", serif; letter-spacing: .12em; text-transform: uppercase;
     color: #e9dfcf; background: transparent;
-    border: 1px solid rgba(233,223,207,.28); border-radius: 999px;
-    padding: 10px 16px; cursor: pointer; transition: .2s;
+    border: 1px solid rgba(233,223,207,.28); border-radius: 999px; padding: 10px 16px;
   }
-  .tabs button:hover { border-color: var(--honey); color: #fff; }
+  .tabs button:hover { border-color: #e2b86a; color: #fff; }
   .tabs button[aria-current="page"] { background: var(--paper); color: var(--ink); border-color: var(--paper); }
   .tabs .home { padding: 8px 10px; display: grid; place-items: center; }
   .tabs .home svg { width: 18px; height: 18px; }
 
   /* ---------- hoja ---------- */
-  main { max-width: 980px; margin: 0 auto; }
+  main { max-width: 1000px; margin: 0 auto; }
   .sheet {
-    display: none;
-    position: relative; overflow: hidden;
-    background:
-      repeating-linear-gradient(45deg, rgba(120,100,70,.025) 0 1px, transparent 1px 6px),
-      var(--paper);
-    border-radius: 6px;
-    padding: 46px clamp(22px, 5vw, 58px) 34px;
-    box-shadow: 0 1px 0 #fff inset, 0 24px 50px rgba(0,0,0,.38), 0 2px 6px rgba(0,0,0,.25);
-  }
-  .sheet::before { /* marco fino */
-    content: ""; position: absolute; inset: 12px; pointer-events: none;
-    border: 1px solid rgba(176,141,87,.45); border-radius: 3px;
+    display: none; position: relative; overflow: hidden;
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 44px clamp(20px, 4.5vw, 56px) 30px;
+    box-shadow: 0 24px 50px rgba(0,0,0,.4), 0 2px 6px rgba(0,0,0,.25);
   }
   .sheet.active { display: block; animation: turn .45s ease both; }
   @keyframes turn { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
 
-  .wash { /* acuarela suave en las esquinas */
-    position: absolute; border-radius: 50%; filter: blur(34px); opacity: .32; pointer-events: none;
-  }
-  .wash.a { width: 280px; height: 280px; top: -90px; right: -70px; }
-  .wash.b { width: 240px; height: 240px; bottom: -80px; left: -70px; }
+  .title { text-align: center; margin-bottom: 6px; }
+  .title.left { text-align: left; }
+  .title h1 { font: 600 clamp(28px, 5.2vw, 42px)/1.1 "Cinzel", serif; font-variant: small-caps; letter-spacing: .03em; }
+  .title .sub { font: 600 15px/1 "Cinzel", serif; letter-spacing: .08em; color: var(--ink-soft); margin-top: 10px; }
+  .orn { display: flex; justify-content: center; margin: 8px auto 22px; color: var(--gold); }
+  .orn svg { width: 26px; height: 26px; }
+  .orn.none { display: none; }
 
-  .sheet > * { position: relative; }
+  /* filas de la hoja: texto + ilustraciones, como en el menú */
+  .r { display: grid; gap: 14px 30px; align-items: center; margin-bottom: 12px; }
+  .r.top { align-items: start; }
+  .r figure { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  img { max-width: 100%; height: auto; display: block; mix-blend-mode: multiply; }
 
-  .title { text-align: center; margin-bottom: 8px; }
-  .title h1 {
-    font: 600 clamp(26px, 5vw, 40px)/1.1 "Cinzel", serif;
-    letter-spacing: .04em; font-variant: small-caps; text-transform: none;
-    color: var(--ink);
-  }
-  .orn { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px auto 26px; color: var(--gold); }
-  .orn::before, .orn::after { content: ""; height: 1px; width: min(120px, 22vw); background: linear-gradient(90deg, transparent, var(--gold)); }
-  .orn::after { transform: scaleX(-1); }
-  .orn svg { width: 22px; height: 22px; }
-
-  .note {
-    text-align: center; margin: -12px 0 24px;
-    font: 600 12px/1 "Cinzel", serif; letter-spacing: .14em; text-transform: uppercase; color: var(--gold);
-  }
-  .note span { border: 1px solid var(--gold); border-radius: 999px; padding: 7px 14px; display: inline-block; }
-
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 54px; }
-  .group { margin-bottom: 20px; }
-  .group.wide { grid-column: 1 / -1; }
   .group h2 {
-    font: 600 clamp(18px, 3vw, 22px)/1.1 "Cinzel", serif; font-variant: small-caps;
-    letter-spacing: .05em; color: var(--ink);
-    padding-bottom: 8px; margin-bottom: 12px;
-    border-bottom: 1px solid rgba(176,141,87,.5);
-    display: flex; align-items: baseline; gap: 10px;
+    font: 600 clamp(19px, 3vw, 24px)/1.1 "Cinzel", serif; font-variant: small-caps; letter-spacing: .04em;
+    margin-bottom: 10px;
   }
-  .group h2 small { font: italic 500 15px "Cormorant Garamond", serif; color: var(--ink-soft); letter-spacing: 0; font-variant: normal; }
+  .group h2.line { padding-bottom: 6px; border-bottom: 1px solid rgba(176,141,87,.45); }
   .list { list-style: none; }
-  .group.wide .list { columns: 2; column-gap: 54px; }
-  .item { break-inside: avoid; padding: 6px 0 7px; }
-  .row { display: flex; align-items: baseline; gap: 8px; }
-  .row .name { font: 700 17px/1.2 "Cormorant Garamond", serif; color: var(--ink); }
-  .row .dots { flex: 1; min-width: 14px; border-bottom: 2px dotted rgba(122,106,91,.5); transform: translateY(-3px); }
-  .row .price { font: 700 17px/1 "Cinzel", serif; color: var(--ink); white-space: nowrap; }
-  .desc { font-size: 15.5px; color: var(--ink-soft); margin-top: 2px; max-width: 94%; }
-  .tag { font: 600 10px/1 "Cinzel", serif; letter-spacing: .06em; text-transform: uppercase; color: var(--sage); border: 1px solid currentColor; border-radius: 99px; padding: 3px 7px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+  .list.two { columns: 2; column-gap: 40px; }
+  .item { break-inside: avoid; padding: 4px 0 6px; }
+  .row { display: flex; align-items: baseline; gap: 6px; }
+  .row .name { font: 700 17px/1.2 "Cormorant Garamond", serif; }
+  .row .dots { flex: 1; min-width: 12px; border-bottom: 2px dotted rgba(111,96,83,.55); transform: translateY(-3px); }
+  .row .price { font: 700 16px/1 "Cinzel", serif; white-space: nowrap; }
+  .desc { font-size: 15px; color: var(--ink-soft); margin-top: 1px; }
+  .tag { font: 600 9.5px/1 "Cinzel", serif; letter-spacing: .05em; text-transform: uppercase; color: #6d7f4a; border: 1px solid currentColor; border-radius: 99px; padding: 3px 6px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+  .tight .item { padding: 2px 0 3px; }
 
-  .flavors { font: 600 15px/1.5 "Cinzel", serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); margin-top: 6px; }
-  .flavors-title { font: italic 500 15px "Cormorant Garamond", serif; color: var(--ink-soft); margin-top: 14px; }
-  .juices { color: var(--ink-soft); font-size: 16.5px; margin-bottom: 10px; }
+  .flavors { font: 600 14px/1.6 "Cinzel", serif; letter-spacing: .08em; text-transform: uppercase; margin-top: 8px; }
+  .flavors-title { font: italic 600 16px "Cormorant Garamond", serif; color: var(--ink-soft); margin-top: 12px; }
+  .juices { color: var(--ink-soft); font-size: 16px; margin-bottom: 8px; }
 
-  /* pie de hoja y navegación */
-  .foot {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    margin-top: 26px; padding-top: 16px; border-top: 1px solid rgba(176,141,87,.4);
-  }
-  .foot .mini { font: 800 13px/1 "Montserrat", sans-serif; letter-spacing: .02em; color: var(--ink); }
-  .foot .mini em { font: 400 15px "Pacifico", cursive; color: var(--gold); margin-left: 4px; font-style: normal; }
-  .nav button {
-    font: 600 12px/1 "Cinzel", serif; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--ink); background: transparent; border: 1px solid rgba(58,44,34,.35);
-    border-radius: 999px; padding: 10px 16px; cursor: pointer; transition: .2s;
-  }
-  .nav button:hover { background: var(--ink); color: var(--paper); }
+  /* mosaicos y composiciones de imágenes */
+  .zig { display: flex; flex-direction: column; gap: 6px; }
+  .zig figure { align-items: flex-start; }
+  .zig figure.rt { align-items: flex-end; }
+  .zig figcaption, .cap { font: 600 13px/1 "Cinzel", serif; font-variant: small-caps; letter-spacing: .05em; color: var(--ink); }
+  .c4 { display: grid; grid-template-columns: auto auto auto; gap: 0 8px; align-items: center; justify-items: center; }
+  .c4 .a { grid-row: span 2; }
+  .c4 .c { grid-row: span 2; }
+  .mosaic { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: center; align-items: center; }
+
+  /* pie y navegación */
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 14px; border-top: 1px solid rgba(176,141,87,.4); }
+  .foot .mini { font: 800 13px/1 "Montserrat", "Arial Black", sans-serif; }
+  .foot .mini em { font: italic 600 15px "Cormorant Garamond", serif; color: var(--gold); margin-left: 4px; }
   .nav { display: flex; gap: 8px; }
+  .nav button { font: 600 12px/1 "Cinzel", serif; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1px solid rgba(58,44,34,.35); border-radius: 999px; padding: 10px 16px; cursor: pointer; transition: .2s; }
+  .nav button:hover { background: var(--ink); color: var(--paper); }
 
-  /* ---------- portada ---------- */
-  .cover { text-align: center; padding: 56px clamp(22px,5vw,58px) 44px; }
-  .logo {
-    width: 190px; height: 190px; margin: 6px auto 12px; position: relative;
-    border: 8px solid var(--ink); display: grid; place-items: center; background: var(--paper);
+  /* ---------- portada (tapa de cuero) ---------- */
+  .sheet.cover {
+    background:
+      radial-gradient(500px 360px at 30% 20%, rgba(255,255,255,.07), transparent 70%),
+      repeating-radial-gradient(circle at 70% 60%, rgba(0,0,0,.035) 0 1.5px, transparent 1.5px 4px),
+      #4e4036;
+    text-align: center; padding: 52px clamp(20px, 5vw, 56px) 40px; color: #efe6d8;
   }
-  .logo b { font: 800 56px/.92 "Montserrat", sans-serif; letter-spacing: -.01em; color: var(--ink); text-align: left; display: block; }
-  .logo em { position: absolute; right: -8px; bottom: -22px; background: var(--paper); padding: 0 10px 0 12px; font: 400 26px/1 "Pacifico", cursive; font-style: normal; color: var(--ink); }
-  .cover .sub { margin-top: 34px; font: 500 13px/1 "Cinzel", serif; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); }
-  .cover h1 { font: 600 clamp(28px,6vw,44px)/1.1 "Cinzel", serif; font-variant: small-caps; margin: 14px 0 4px; letter-spacing: .05em; }
-  .index { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 30px; text-align: left; }
+  .cover .logo { width: min(300px, 70%); margin: 0 auto; mix-blend-mode: normal; }
+  .cover .kicker { font: 500 13px/1 "Cinzel", serif; letter-spacing: .32em; text-transform: uppercase; color: #d9c08c; margin-top: 26px; }
+  .index { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 26px; text-align: left; }
   .index button {
-    display: flex; align-items: center; gap: 14px; text-align: left; cursor: pointer;
-    background: rgba(255,255,255,.55); border: 1px solid rgba(176,141,87,.5); border-radius: 4px;
-    padding: 16px 18px; color: var(--ink); transition: .2s;
+    display: flex; align-items: center; gap: 12px; cursor: pointer; transition: .2s;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(239,230,216,.3); border-radius: 4px;
+    padding: 14px 16px; color: #f3ebdd;
   }
-  .index button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.12); background: #fff; }
-  .index svg { width: 30px; height: 30px; flex: 0 0 auto; color: var(--gold); }
-  .index span { font: 600 17px/1.15 "Cinzel", serif; font-variant: small-caps; letter-spacing: .04em; }
-  .index small { display: block; font: italic 500 14px "Cormorant Garamond", serif; color: var(--ink-soft); font-variant: normal; letter-spacing: 0; margin-top: 3px; }
+  .index button:hover { background: rgba(255,255,255,.14); transform: translateY(-2px); }
+  .index svg { width: 28px; height: 28px; flex: 0 0 auto; color: #d9c08c; }
+  .index span { font: 600 16px/1.15 "Cinzel", serif; font-variant: small-caps; letter-spacing: .04em; }
+  .index small { display: block; font: italic 500 14px "Cormorant Garamond", serif; color: #cdbfa9; font-variant: normal; letter-spacing: 0; margin-top: 3px; }
 
-  @media (max-width: 720px) {
+  @media (max-width: 760px) {
     body { font-size: 16px; }
-    .sheet { padding: 38px 20px 26px; }
-    .grid { grid-template-columns: 1fr; }
-    .group.wide .list { columns: 1; }
-    .desc { max-width: 100%; }
+    .sheet { padding: 34px 18px 24px; }
+    .r { grid-template-columns: 1fr !important; }
+    .list.two { columns: 1; }
+    .zig figure, .zig figure.rt { align-items: center; }
     .foot { flex-direction: column-reverse; }
     .tabs { justify-content: flex-start; }
+    .r.rev > :first-child { order: 2; }
   }
   @media (prefers-reduced-motion: reduce) { .sheet.active { animation: none; } }
 </style>
@@ -183,8 +154,7 @@
 
 <script>
 /* ============================================================
-   DATOS DEL MENÚ  — editar aquí precios y descripciones
-   item: [nombre, precio, descripción, etiqueta(opcional)]
+   ICONOS, HELPERS
    ============================================================ */
 const ICONS = {
   bean:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="6" ry="9" transform="rotate(35 12 12)"/><path d="M8 5c3 3 1 5 4 7s1 5 4 7"/></svg>',
@@ -194,205 +164,244 @@ const ICONS = {
   sun:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>',
   home:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg>'
 };
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const IMG = (n, w, alt = '') => `<img src="img/${n}.jpg" alt="${esc(alt)}" style="width:${w}px" loading="lazy">`;
+const FIG = (n, w, alt, cap, cls = '') => `<figure class="${cls}">${IMG(n, w, alt)}${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
 
+function item([name, price, desc, tag]) {
+  return `<li class="item"><div class="row"><span class="name">${esc(name)}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</span><span class="dots"></span><span class="price">${esc(price)}</span></div>${desc ? `<p class="desc">${esc(desc)}</p>` : ''}</li>`;
+}
+// grupo: título + lista (two = lista en 2 columnas, line = subrayado dorado)
+function grp(h, items, o = {}) {
+  return `<section class="group${o.tight ? ' tight' : ''}">${h ? `<h2${o.line ? ' class="line"' : ''}>${esc(h)}</h2>` : ''}${o.before || ''}<ul class="list${o.two ? ' two' : ''}">${items.map(item).join('')}</ul>${o.after || ''}</section>`;
+}
+// fila de composición: columnas CSS + celdas
+const row = (cols, cells, cls = '') => `<div class="r ${cls}" style="grid-template-columns:${cols}">${cells.join('')}</div>`;
+
+/* ============================================================
+   DATOS DEL MENÚ — editar aquí precios y descripciones
+   ============================================================ */
+const D = {
+  calientes: [["Capuccino",19],["Americano",16],["Espresso",14],["Lungo",14],["Cortado",15],["Flat White",25],["Latte",22],["Mocaccino",28],["Capugalleta",30],["Macchiato",15]],
+  frios_cafe: [["Iced Latte",22],["Dirty Coffee",16],["Iced Tamarindo Coffee",25],["Iced Orange Coffee",25],["Cold Brew",25],["Affogato",25,"Helado de queso o vainilla"],["Frappe Capuccino",30],["Vienesa",30]],
+  metodos: [["Aeropress",30],["Prensa Francesa",30],["Chemex",30],["Origami",30],["V60",30],["Sifón Japonés",30]],
+
+  tecitos: [
+    ["Coca Latte",28,"Harina de coca con leche texturizada"],
+    ["Matcha Latte",28,"Té Matcha con leche texturizada"],
+    ["Chai Latte",28,"Té Chai con leche texturizada"],
+    ["Leche Dorada",28,"Cúrcuma, canela, jengibre, pimienta negra, miel y aceite de coco con leche texturizada"],
+    ["Té Negro con Especias",12],
+    ["Mates",10,"Coca – Manzanilla – Anís"]],
+  frios: [
+    ["Frappé Chai",28,"Té Chai con leche frappeado"],
+    ["Frappé Matcha",28,"Té Matcha con leche frappeado"],
+    ["Frappé Frutos Rojos",28,"Infusión de frutos rojos con agua"],
+    ["Frappé Pie de Limón",30,"Pie de limón con leche y crema"],
+    ["Frappé Chocolate",30,"Chocolate con leche y crema"],
+    ["Frappé Iced Tea",20,"Té negro con especias y limón"],
+    ["Iced Matcha Latte",28,"Té matcha con leche y cubos de hielo"]],
+  calderitas: [
+    ["Frutos rojos",25,"Infusión de flor de Jamaica, manzana, canela, pétalos de rosa y frutos rojos"],
+    ["Flores amarillas",25,"Infusión de anís, jengibre, naranja, miel y manzanilla"],
+    ["Bosque púrpura",25,"Infusión de mora, limón y lavanda"],
+    ["Campo verde",25,"Infusión de limón, cedrón, coca y manzana verde"]],
+  chocolates: [
+    ["Chocolate Marshmallow",28,"Cocoa con leche texturizada y marshmallows"],
+    ["Chocolate Cremoso",28,"Cocoa con leche texturizada y crema, decorado con chocolate líquido"],
+    ["Chocolate con leche",20,"Cocoa con leche texturizada"]],
+  jugos: [["Con agua",15],["Con leche",18]],
+
+  salada: [
+    ["Cuñapé",9,"Fécula de yuca con queso horneado","sin gluten · sin aceite vegetal"],
+    ["Sonso",20,"Yuca cocida con queso criollo y queso crema","sin gluten · sin aceite vegetal"],
+    ["Empanadas al horno",14,"Empanadas rellenas de pollo"],
+    ["Tarta de pizza",25,"Tarta de masa quebrada con jamón y queso, con tomate deshidratado"],
+    ["Tarta Vegetariana",25,"Tarta de masa quebrada con champiñones y queso mozzarella"]],
+  dulce: [
+    ["Brownie","14 – 24","Brownie caliente de chocolate decorado con chocolate líquido"],
+    ["Queque","8 – 38","Queque de limón"],
+    ["Alfajores",9,"Maicena con coco y dulce de leche"],
+    ["Cinnamon Rolls",14,"Rollos de canela, decorado con queso crema"],
+    ["Galletas",10,"Galletas de chocolate, red velvet y chispas de chocolate"],
+    ["Tiramisú",25,"Postre con galletas, crema y café"],
+    ["Torta","30 – 290","Zanahoria, chocolate, coco y piña"],
+    ["Torta de pencos","25 – 240","Varias capas de masa intercaladas con dulce de leche"],
+    ["Pavlova","25 – 210","Merengue relleno con helado, crema y frutas","sin gluten · sin aceite vegetal"],
+    ["Tarta Vasca de queso","30 – 190","Queso crema, crema de leche horneada decorada con manjar blanco y queso Río Grande"],
+    ["Tarta Cheese Cake",25,"Tartas de masa quebrada horneada con queso crema, relleno de jalea y crema, decorada con menta y ralladuras de chocolate"]],
+
+  marraqueta: [
+    ["Carne ahumada con queso",42,"Marraqueta con carne de res ahumada con queso mozzarella y tomate deshidratado en aceite de oliva"],
+    ["Carne ahumada con ensalada asada",42,"Marraqueta con carne de res ahumada acompañada de una ensalada asada de zucchini con jengibre"],
+    ["Palta",30,"Marraqueta con palta en rodajas, tomate deshidratado en aceite de oliva, pimienta, queso criollo y gotitas de limón"],
+    ["Champiñones",38,"Marraqueta con champiñones, cebolla caramelizada, queso mozzarella, salsa pesto y tomate deshidratado"],
+    ["Pollo barbacoa",38,"Marraqueta con pechuga de pollo en salsa barbacoa y queso mozzarella"],
+    ["Jamón y queso",25,"Marraqueta con jamón, queso mozzarella y queso crema"],
+    ["Huevo",25,"Marraqueta con huevo revuelto, jamón, tomate fresco y pimienta"],
+    ["Bronco",48,"Marraqueta con palta, huevo estrellado, tocino, queso criollo, queso mozzarella, tomate deshidratado en aceite de oliva y gotitas de limón"]],
+  cunape: [
+    ["Carne ahumada",22,"Cuñapé con carne de res ahumada con queso mozzarella y tomate deshidratado en aceite de oliva"],
+    ["Champiñones",22,"Cuñapé con champiñones, cebolla caramelizada, queso mozzarella, salsa pesto y tomate deshidratado"],
+    ["Pollo Barbacoa",18,"Cuñapé con pechuga de pollo en salsa barbacoa y queso mozzarella"],
+    ["Italiano",18,"Cuñapé con salsa pesto, queso mozzarella y tomate deshidratado"],
+    ["Napolitano",18,"Cuñapé con jamón, queso y orégano"],
+    ["Huevo",15,"Cuñapé con huevo revuelto"]],
+
+  desayunos: [
+    ["Brunch",75,"6 porciones de marraqueta: palta con queso y tomate deshidratado, dulce de leche con queso, mermelada de mora con queso crema, huevo con tomate deshidratado, jamón con queso y salsa pesto con queso; incluye 2 jugos"],
+    ["Wafles Clásicos",45,"2 wafles con dulce de leche, fruta y crema"],
+    ["Wafles con Tocino",55,"2 wafles con huevo revuelto, tocino y miel de maple"],
+    ["Panqueques",45,"4 panqueques con miel de caña y mantequilla"],
+    ["Francesa de frutos rojos",45,"Tostadas francesas rellenas con queso crema y jalea de moras"],
+    ["Francesa de Jamón y Queso",45,"Tostadas francesas rellenas con queso crema, jamón, queso y mostaza"],
+    ["Tocino huevo palta",55,"3 huevos estrellados con tocino, palta, 2 tostadas o 1 marraqueta"],
+    ["Paltita tostada",45,"2 tostadas con palta, 2 huevos estrellados sin aceite y tomate fresco"],
+    ["Costra de queso keto",55,"3 huevos estrellados sobre una costra de queso criollo con palta y tomate fresco"],
+    ["Criollo",45,"3 huevos estrellados sobre una cama de chorrellana cubierto con queso mozzarella, acompañado de una marraqueta"],
+    ["Parrillero",85,"Chorizo parrillero, carne ahumada, ensalada parrillera y 3 huevos estrellados, acompañado de marraqueta"]]
+};
+
+/* ============================================================
+   PÁGINAS — cada una replica la distribución de la hoja impresa
+   ============================================================ */
 const PAGES = [
  { id:"cafeteria", short:"Café", icon:"bean", sub:"Calientes, fríos y filtrados", title:"Cafetería de Especialidad",
-   washes:["#c9a27a","#e2b86a"],
-   groups:[
-    { h:"Calientes", items:[
-      ["Capuccino",19],["Americano",16],["Espresso",14],["Lungo",14],["Cortado",15],
-      ["Flat White",25],["Latte",22],["Mocaccino",28],["Capugalleta",30],["Macchiato",15]]},
-    { h:"Fríos", items:[
-      ["Iced Latte",22],["Dirty Coffee",16],["Iced Tamarindo Coffee",25],["Iced Orange Coffee",25],
-      ["Cold Brew",25],["Affogato",25,"Helado de queso o vainilla"],["Frappe Capuccino",30],["Vienesa",30]]},
-    { h:"Métodos y Filtrados", wide:true, items:[
-      ["Aeropress",30],["Origami",30],["Prensa Francesa",30],["V60",30],["Chemex",30],["Sifón Japonés",30]]}
-   ]},
+   html: () =>
+     row("1fr 1fr", [
+       grp("Calientes", D.calientes, {tight:true}),
+       `<div class="mosaic">${IMG('caf_cup1',150,'Café americano')}${IMG('caf_cup2',155,'Capuccino')}${IMG('caf_tartaleta',150,'Café con espuma')}</div>`
+     ], "top") +
+     row("1fr 1fr", [
+       `<div class="c4">
+          <span class="a">${IMG('caf_icedlatte',140,'Iced latte')}</span>
+          ${IMG('caf_mocca',125,'Mocaccino')}
+          <span class="c">${IMG('caf_frappe',115,'Frappe capuccino')}</span>
+          ${IMG('caf_espresso',130,'Affogato')}
+        </div>`,
+       grp("Fríos", D.frios_cafe, {tight:true})
+     ]) +
+     `<div class="group" style="margin-top:6px">${grp("Métodos y Filtrados", D.metodos, {two:true, tight:true, line:true})}</div>` +
+     `<div style="display:flex;justify-content:center;margin-top:8px">${IMG('caf_metodos',620,'Aeropress, prensa francesa, chemex, origami, V60 y sifón japonés')}</div>`
+ },
 
  { id:"infusiones", short:"Infusiones", icon:"leaf", sub:"Tecitos, frappés y chocolates", title:"Infusiones y Bebidas",
-   washes:["#8a9a6a","#c98a86"],
-   cols:[[0,2],[1,3,4]], // índices de grupos por columna
-   groups:[
-    { h:"Tecitos", items:[
-      ["Coca Latte",28,"Harina de coca con leche texturizada"],
-      ["Matcha Latte",28,"Té Matcha con leche texturizada"],
-      ["Chai Latte",28,"Té Chai con leche texturizada"],
-      ["Leche Dorada",28,"Cúrcuma, canela, jengibre, pimienta negra, miel y aceite de coco con leche texturizada"],
-      ["Té Negro con Especias",12],
-      ["Mates",10,"Coca · Manzanilla · Anís"]]},
-    { h:"Calderitas", items:[
-      ["Frutos rojos",25,"Infusión de flor de Jamaica, manzana, canela, pétalos de rosa y frutos rojos"],
-      ["Flores amarillas",25,"Infusión de anís, jengibre, naranja, miel y manzanilla"],
-      ["Bosque púrpura",25,"Infusión de mora, limón y lavanda"],
-      ["Campo verde",25,"Infusión de limón, cedrón, coca y manzana verde"]]},
-    { h:"Fríos", items:[
-      ["Frappé Chai",28,"Té Chai con leche frappeado"],
-      ["Frappé Matcha",28,"Té Matcha con leche frappeado"],
-      ["Frappé Frutos Rojos",28,"Infusión de frutos rojos con agua"],
-      ["Frappé Pie de Limón",30,"Pie de limón con leche y crema"],
-      ["Frappé Chocolate",30,"Chocolate con leche y crema"],
-      ["Frappé Iced Tea",20,"Té negro con especias y limón"],
-      ["Iced Matcha Latte",28,"Té matcha con leche y cubos de hielo"]]},
-    { h:"Chocolates", items:[
-      ["Chocolate Marshmallow",28,"Cocoa con leche texturizada y marshmallows"],
-      ["Chocolate Cremoso",28,"Cocoa con leche texturizada y crema, decorado con chocolate líquido"],
-      ["Chocolate con leche",20,"Cocoa con leche texturizada"]]},
-    { h:"Jugos de fruta", juices:true,
-      flavors:["Frutilla","Mango","Papaya","Maracuyá","Tumbo","Piña","Melón y limón"],
-      items:[["Con agua",15],["Con leche",18]]}
-   ]},
+   html: () =>
+     row("150px 1fr 190px", [
+       IMG('lattes',150,'Matcha latte y coca latte'),
+       grp("Tecitos", D.tecitos, {tight:true}),
+       IMG('teapot',190,'Tetera con infusión de frutos rojos')
+     ]) +
+     row("1fr 240px 1fr", [
+       grp("Fríos", D.frios, {tight:true}),
+       IMG('frappes',240,'Frappés'),
+       grp("Calderitas", D.calderitas, {tight:true})
+     ]) +
+     row("105px 1fr 1.15fr 220px", [
+       IMG('jugo',105,'Jugo de frutilla'),
+       `<section class="group"><h2>Jugos de Fruta</h2><p class="juices">Frutilla, Mango, Papaya, Maracuyá, Tumbo, Piña, Melón y limón</p><ul class="list tight">${D.jugos.map(item).join('')}</ul></section>`,
+       grp("Chocolates", D.chocolates, {tight:true}),
+       IMG('chocolates',220,'Chocolates calientes')
+     ])
+ },
 
  { id:"reposteria", short:"Repostería", icon:"cake", sub:"Dulce y salada, hecha al día", title:"Repostería",
-   washes:["#e2b86a","#c98a86"],
-   groups:[
-    { h:"Repostería salada", wide:true, items:[
-      ["Cuñapé",9,"Fécula de yuca con queso horneado","sin gluten · sin aceite vegetal"],
-      ["Sonso",20,"Yuca cocida con queso criollo y queso crema","sin gluten · sin aceite vegetal"],
-      ["Empanadas al horno",14,"Empanadas rellenas de pollo"],
-      ["Tarta de pizza",25,"Tarta de masa quebrada con jamón y queso, con tomate deshidratado"],
-      ["Tarta Vegetariana",25,"Tarta de masa quebrada con champiñones y queso mozzarella"]]},
-    { h:"Repostería dulce", wide:true, items:[
-      ["Brownie","14 – 24","Brownie caliente de chocolate decorado con chocolate líquido"],
-      ["Queque","8 – 38","Queque de limón"],
-      ["Alfajores",9,"Maicena con coco y dulce de leche"],
-      ["Cinnamon Rolls",14,"Rollos de canela decorados con queso crema"],
-      ["Galletas",10,"Galletas de chocolate, red velvet y chispas de chocolate"],
-      ["Tiramisú",25,"Postre con galletas, crema y café"],
-      ["Torta","30 – 290","Zanahoria, chocolate, coco y piña"],
-      ["Torta de pencos","25 – 240","Varias capas de masa intercaladas con dulce de leche"],
-      ["Pavlova","25 – 210","Merengue relleno con helado, crema y frutas","sin gluten · sin aceite vegetal"],
-      ["Tarta Vasca de queso","30 – 190","Queso crema y crema de leche horneada, decorada con manjar blanco y queso Río Grande"],
-      ["Tarta Cheese Cake",25,"Tartas de masa quebrada horneada con queso crema, relleno de jalea y crema, decorada con menta y ralladura de chocolate"]],
-      flavorsTitle:"Sabores", flavors:["Pie de limón","Frutos rojos","Maracuyá"]}
-   ]},
+   html: () =>
+     row("1fr 1fr", [
+       IMG('rep_top',290,'Cuñapés, empanadas, galletas y tarta'),
+       grp("Repostería salada", D.salada, {tight:true})
+     ]) +
+     row("1.2fr 1fr", [
+       grp("Repostería dulce", D.dulce, {tight:true, after:`<p class="flavors-title">Sabores</p><p class="flavors">Pie de limón<br>Frutos rojos<br>Maracuyá</p>`}),
+       `<div class="mosaic">
+          ${IMG('rep_brownies',125,'Brownies, galletas y alfajores')}${IMG('rep_choco',150,'Torta de chocolate')}
+          ${IMG('rep_cinnamon',190,'Cinnamon rolls')}${IMG('rep_pavlova',100,'Pavlova')}
+          ${IMG('rep_pencos',210,'Torta de pencos')}
+          ${IMG('rep_vasca',190,'Tarta vasca de queso')}
+          ${IMG('rep_limon',118,'Tarta de pie de limón')}${IMG('rep_maracuya',112,'Tarta de maracuyá')}${IMG('rep_frutos',115,'Tarta de frutos rojos')}
+        </div>`
+     ], "top")
+ },
 
  { id:"sandwiches", short:"Sandwiches", icon:"bread", sub:"Marraqueta y cuñapé", title:"Sandwiches",
-   washes:["#c9a27a","#8a9a6a"],
-   groups:[
-    { h:"Sandwich Marraqueta", items:[
-      ["Carne ahumada con queso",42,"Marraqueta con carne de res ahumada con queso mozzarella y tomate deshidratado en aceite de oliva"],
-      ["Carne ahumada con ensalada asada",42,"Marraqueta con carne de res ahumada acompañada de una ensalada asada de zucchini con jengibre"],
-      ["Palta",30,"Marraqueta con palta en rodajas, tomate deshidratado en aceite de oliva, pimienta, queso criollo y gotitas de limón"],
-      ["Champiñones",38,"Marraqueta con champiñones, cebolla caramelizada, queso mozzarella, salsa pesto y tomate deshidratado"],
-      ["Pollo barbacoa",38,"Marraqueta con pechuga de pollo en salsa barbacoa y queso mozzarella"],
-      ["Jamón y queso",25,"Marraqueta con jamón, queso mozzarella y queso crema"],
-      ["Huevo",25,"Marraqueta con huevo revuelto, jamón, tomate fresco y pimienta"],
-      ["Bronco",48,"Marraqueta con palta, huevo estrellado, tocino, queso criollo, queso mozzarella, tomate deshidratado en aceite de oliva y gotitas de limón"]]},
-    { h:"Sandwich Cuñapé", items:[
-      ["Carne ahumada",22,"Cuñapé con carne de res ahumada con queso mozzarella y tomate deshidratado en aceite de oliva"],
-      ["Champiñones",22,"Cuñapé con champiñones, cebolla caramelizada, queso mozzarella, salsa pesto y tomate deshidratado"],
-      ["Pollo Barbacoa",18,"Cuñapé con pechuga de pollo en salsa barbacoa y queso mozzarella"],
-      ["Italiano",18,"Cuñapé con salsa pesto, queso mozzarella y tomate deshidratado"],
-      ["Napolitano",18,"Cuñapé con jamón, queso y orégano"],
-      ["Huevo",15,"Cuñapé con huevo revuelto"]]}
-   ]},
+   html: () =>
+     row("1fr 250px", [
+       grp("Sandwich Marraqueta", D.marraqueta, {line:true, tight:true}),
+       `<div class="zig" style="gap:14px"><figure class="rt">${IMG('sand_1',215,'Sandwich de carne ahumada')}</figure><figure>${IMG('sand_2',200,'Sandwich de palta')}</figure><figure class="rt">${IMG('sand_3',200,'Sandwich de pollo barbacoa')}</figure><figure>${IMG('sand_4',235,'Sandwich de huevo')}</figure></div>`
+     ], "top") +
+     `<div style="margin-top:14px">${grp("Sandwich Cuñapé", D.cunape, {two:true, line:true, tight:true})}</div>` +
+     `<div style="display:flex;justify-content:center;margin-top:6px">${IMG('cunape',300,'Sandwiches de cuñapé')}</div>`
+ },
 
- { id:"desayuna", short:"Desayuna", icon:"sun", sub:"Brunch, wafles, tostadas y más", title:"Desayuna",
-   washes:["#e2b86a","#8a9a6a"],
-   note:"+10 jugo de fruta",
-   groups:[
-    { h:"Desayunos", wide:true, items:[
-      ["Brunch",75,"6 porciones de marraqueta: palta con queso y tomate deshidratado, dulce de leche con queso, mermelada de mora con queso crema, huevo con tomate deshidratado, jamón con queso y salsa pesto con queso; incluye 2 jugos"],
-      ["Wafles Clásicos",45,"2 wafles con dulce de leche, fruta y crema"],
-      ["Wafles con Tocino",55,"2 wafles con huevo revuelto, tocino y miel de maple"],
-      ["Panqueques",45,"4 panqueques con miel de caña y mantequilla"],
-      ["Francesa de frutos rojos",45,"Tostadas francesas rellenas con queso crema y jalea de moras"],
-      ["Francesa de jamón y queso",45,"Tostadas francesas rellenas con queso crema, jamón, queso y mostaza"],
-      ["Tocino, huevo y palta",55,"3 huevos estrellados con tocino, palta, 2 tostadas o 1 marraqueta"],
-      ["Paltita tostada",45,"2 tostadas con palta, 2 huevos estrellados sin aceite y tomate fresco"],
-      ["Costra de queso keto",55,"3 huevos estrellados sobre una costra de queso criollo con palta y tomate fresco"],
-      ["Criollo",45,"3 huevos estrellados sobre una cama de chorrellana cubierta con queso mozzarella, acompañado de una marraqueta"],
-      ["Parrillero",85,"Chorizo parrillero, carne ahumada, ensalada parrillera y 3 huevos estrellados, acompañado de marraqueta"]]}
-   ]}
+ { id:"desayuna", short:"Desayuna", icon:"sun", sub:"Brunch, wafles, tostadas y más", title:"Desayuna", left:true, subtitle:"(+10 jugo de fruta)",
+   html: () =>
+     row("1fr 330px", [
+       grp("", D.desayunos, {tight:true}),
+       `<div class="zig">
+          ${FIG('brunch',215,'Brunch','Brunch')}
+          ${FIG('waffles_tocino',200,'Waffles con tocino','Waffles Con Tocino','rt')}
+          ${FIG('panqueques',200,'Panqueques','Panqueques')}
+          ${FIG('panecitos',125,'','','rt')}
+          ${FIG('francesa',170,'Francesa de frutos rojos','Francesa','rt')}
+          ${FIG('tocino_palta',200,'Tocino huevo palta','Tocino Huevo Palta')}
+          ${FIG('paltita',200,'Paltita tostada','Paltita Tostada','rt')}
+          ${FIG('costra',210,'Costra de queso','Costra De Queso')}
+          ${FIG('criollo',210,'Criollo','Criollo','rt')}
+        </div>`
+     ], "top")
+ }
 ];
 
 /* ============================================================
    RENDER
    ============================================================ */
-const ORN = ICONS.leaf;
-const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-
-function itemHTML([name, price, desc, tag]) {
-  return `<li class="item">
-    <div class="row"><span class="name">${esc(name)}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</span><span class="dots"></span><span class="price">${esc(price)}</span></div>
-    ${desc ? `<p class="desc">${esc(desc)}</p>` : ''}
-  </li>`;
-}
-
-function groupHTML(g) {
-  const flavors = g.flavors ? (g.juices
-      ? `<p class="juices">${g.flavors.map(esc).join(' · ')}</p>`
-      : `${g.flavorsTitle ? `<p class="flavors-title">${esc(g.flavorsTitle)}</p>` : ''}<p class="flavors">${g.flavors.map(esc).join('<br>')}</p>`) : '';
-  return `<section class="group${g.wide ? ' wide' : ''}">
-    <h2>${esc(g.h)}</h2>
-    ${g.juices ? flavors : ''}
-    <ul class="list">${g.items.map(itemHTML).join('')}</ul>
-    ${g.juices ? '' : flavors}
-  </section>`;
-}
-
 const main = document.getElementById('main');
 const tabs = document.getElementById('tabs');
 const order = ['inicio', ...PAGES.map(p => p.id)];
+const label = id => id === 'inicio' ? 'Inicio' : PAGES.find(p => p.id === id).short;
 
-function footHTML(i) {
+const footHTML = i => {
   const prev = order[i-1], next = order[i+1];
-  const label = id => id === 'inicio' ? 'Inicio' : PAGES.find(p => p.id === id).short;
-  return `<div class="foot">
-    <div class="mini">HOY HAY<em>Café</em></div>
-    <div class="nav">
-      ${prev ? `<button data-go="${prev}">← ${label(prev)}</button>` : ''}
-      ${next ? `<button data-go="${next}">${label(next)} →</button>` : ''}
-    </div>
-  </div>`;
-}
+  return `<div class="foot"><div class="mini">HOY HAY<em>Café</em></div><div class="nav">
+    ${prev ? `<button data-go="${prev}">← ${label(prev)}</button>` : ''}
+    ${next ? `<button data-go="${next}">${label(next)} →</button>` : ''}</div></div>`;
+};
 
-// Portada
 main.insertAdjacentHTML('beforeend', `
 <article class="sheet cover" id="p-inicio">
-  <span class="wash a" style="background:#e2b86a"></span><span class="wash b" style="background:#8a9a6a"></span>
-  <!-- LOGO: reemplazar este bloque por <img src="logo.png"> cuando llegue el real -->
-  <div class="logo"><b>HOY<br>HAY</b><em>Café</em></div>
-  <p class="sub">Catálogo</p>
-  <h1>Menú de la casa</h1>
-  <div class="orn">${ORN}</div>
+  <img class="logo" src="img/logo.png" alt="Hoy Hay Café">
+  <p class="kicker">Catálogo</p>
   <div class="index">
     ${PAGES.map(p => `<button data-go="${p.id}">${ICONS[p.icon]}<span>${esc(p.title)}<small>${esc(p.sub)}</small></span></button>`).join('')}
   </div>
-  <div class="foot" style="justify-content:center"><div class="mini">HOY HAY<em>Café</em></div></div>
 </article>`);
 
-// Hojas
 PAGES.forEach((p, i) => {
+  const hasOrn = !p.left;
   main.insertAdjacentHTML('beforeend', `
   <article class="sheet" id="p-${p.id}">
-    <span class="wash a" style="background:${p.washes[0]}"></span><span class="wash b" style="background:${p.washes[1]}"></span>
-    <header class="title"><h1>${esc(p.title)}</h1></header>
-    <div class="orn">${ICONS[p.icon]}</div>
-    ${p.note ? `<p class="note"><span>${esc(p.note)}</span></p>` : ''}
-    <div class="grid">${p.cols
-      ? p.cols.map(c => `<div class="stack">${c.map(k => groupHTML(p.groups[k])).join('')}</div>`).join('')
-      : p.groups.map(groupHTML).join('')}</div>
+    <header class="title${p.left ? ' left' : ''}"><h1>${esc(p.title)}</h1>${p.subtitle ? `<p class="sub">${esc(p.subtitle)}</p>` : ''}</header>
+    <div class="orn${hasOrn ? '' : ' none'}">${ICONS[p.icon]}</div>
+    ${p.html()}
     ${footHTML(i + 1)}
   </article>`);
 });
 
-// Barra superior
 tabs.insertAdjacentHTML('beforeend',
   `<button class="home" data-go="inicio" aria-label="Inicio">${ICONS.home}</button>` +
   PAGES.map(p => `<button data-go="${p.id}">${esc(p.short)}</button>`).join(''));
 
 /* ---------- navegación: una hoja a la vez ---------- */
+let current = 'inicio';
 function show(id, push = true) {
   if (!order.includes(id)) id = 'inicio';
   document.querySelectorAll('.sheet').forEach(s => s.classList.toggle('active', s.id === 'p-' + id));
-  tabs.querySelectorAll('button').forEach(b => { if (b.dataset.go === id) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
-  const cur = tabs.querySelector('[aria-current]'); if (cur) cur.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  tabs.querySelectorAll('button').forEach(b => b.dataset.go === id ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+  const cur = tabs.querySelector('[aria-current]'); if (cur) cur.scrollIntoView({ inline: 'center', block: 'nearest' });
+  window.scrollTo({ top: 0 });
   if (push) { try { history.replaceState(null, '', '#' + id); } catch (e) {} }
   current = id;
 }
-let current = 'inicio';
 document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) show(b.dataset.go); });
 window.addEventListener('hashchange', () => show(location.hash.slice(1), false));
 document.addEventListener('keydown', e => {
@@ -400,7 +409,6 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' && order[i+1]) show(order[i+1]);
   if (e.key === 'ArrowLeft' && order[i-1]) show(order[i-1]);
 });
-// deslizar en el celular
 let x0 = null;
 document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
 document.addEventListener('touchend', e => {
